@@ -34,6 +34,35 @@ router.post('/', [validateBody], async (req,res) => {
     }
 })
 
+router.put('/:id', [validateId,validateBody], async(req,res) => {
+    try{
+        const id = req.params.id;
+        const cars = req.body;
+        let result = await db('cars').where({id: id}).update({
+            VIN: cars.VIN,
+            make: cars.make,
+            model: cars.model,
+            mileage: cars.mileage
+        })
+        res.status(200).json({message: `${result} row(s) updated`})
+    }
+    catch(error){
+        res.status(500).json({message: `error occurred during update ${error}`})
+    }
+})
+
+router.delete('/:id', [validateId], async (req,res) => {
+    try{
+        const id = req.params.id;
+        let result = await db('cars').where({id: id}).del()
+        res.status(200).json({message: `${result} row(s) deleted`})
+    }
+    catch(error){
+        res.status(500).json({message: `error occurred during delete ${error}`})
+    }
+    
+})
+
 function validateBody(req,res,next){
     if(Object.keys(req.body).length > 0){
         if(req.body.VIN && req.body.make && req.body.model && req.body.mileage){
