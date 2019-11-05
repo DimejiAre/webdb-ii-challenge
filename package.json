@@ -4,6 +4,7 @@
   "description": "Node DB 2 Module Challenge",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "server": "nodemon index.js"
   },
   "author": "Lambda School",
@@ -12,6 +13,7 @@
     "nodemon": "^1.19.2"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "knex": "^0.20.1",
