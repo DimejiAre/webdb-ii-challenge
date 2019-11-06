@@ -20,13 +20,8 @@ router.get('/:id', [validateId], (req,res)=>{
 
 router.post('/', [validateBody], async (req,res) => {
     try{
-        let car = req.body;
-        let result = await db('cars').insert({
-            VIN: car.VIN,
-            make: car.make,
-            model: car.model,
-            mileage: car.mileage
-        })
+        let {VIN, make, model, mileage, transmission_type, status} = req.body;
+        let result = await db('cars').insert({VIN, make, model, mileage, transmission_type, status})
         res.status(201).json({message: `Car with id ${result} was created`})
     }
     catch (error){
@@ -37,13 +32,8 @@ router.post('/', [validateBody], async (req,res) => {
 router.put('/:id', [validateId,validateBody], async(req,res) => {
     try{
         const id = req.params.id;
-        const cars = req.body;
-        let result = await db('cars').where({id: id}).update({
-            VIN: cars.VIN,
-            make: cars.make,
-            model: cars.model,
-            mileage: cars.mileage
-        })
+        let {VIN, make, model, mileage, transmission_type, status} = req.body;
+        let result = await db('cars').where({id: id}).update({VIN, make, model, mileage, transmission_type, status})
         res.status(200).json({message: `${result} row(s) updated`})
     }
     catch(error){
